@@ -1,0 +1,1 @@
+./writer-arm: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=68bff4aa4c590ebd06f8a59ffa5028e6271dbe55, for GNU/Linux 3.2.0, not stripped
