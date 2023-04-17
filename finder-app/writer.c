@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
 // log error, print message, and exit
     if (argc != 3) {
         syslog(LOG_ERR, "ERROR : %s requires 3 arguments to function", writefile);
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
 // open file for writing to
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 // safety for general case use where file would not exist -- logs error, prints message, and exit
     if ((!f)) {
 	syslog(LOG_ERR, "ERROR : %s file does not exist", writefile);
-	exit(EXIT_FAILURE);
+	exit(1);
     }
 
 // write content to file & close file
