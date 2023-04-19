@@ -1,4 +1,11 @@
 #include "systemcalls.h"
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 /**
  * @param cmd the command to execute with system()
@@ -16,6 +23,12 @@ bool do_system(const char *cmd)
  *   and return a boolean true if the system() call completed with success
  *   or false() if it returned a failure
 */
+
+// return boolean to check if system() call passed
+    int result = system(cmd);
+    if (result == -1) {
+        return false;
+    }
 
     return true;
 }
@@ -40,6 +53,7 @@ bool do_exec(int count, ...)
     va_start(args, count);
     char * command[count+1];
     int i;
+    
     for(i=0; i<count; i++)
     {
         command[i] = va_arg(args, char *);
@@ -58,6 +72,24 @@ bool do_exec(int count, ...)
  *   as second argument to the execv() command.
  *
 */
+
+    int status;
+    
+    //system() call through fork, execv, wait format
+    pid_t pid = fork();
+    if (pid == -1) {
+        return false;
+    } else if (pid == 0) {
+        execv(command[0], command);
+        exit(EXIT_FAILURE);
+    } else {
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+            return true;
+        } else {
+            return false;
+            }
+    }
 
     va_end(args);
 
@@ -92,6 +124,32 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
  *   The rest of the behaviour is same as do_exec()
  *
 */
+    // stackoverflow method use
+    int fd = open(outputfile, O_WRONLY|O_TRUNC|O_CREAT, 0644);
+    int status;
+    
+    if (fd== -1) {
+    return false;
+    }
+    
+    // continue like do_exec()
+    pid_t pid = fork();
+    if (pid == -1) {
+        return false;
+    } else if (pid == 0) {
+        dup2(fd, STDOUT_FILENO);
+        execv(command[0], command);
+        exit(EXIT_FAILURE);
+    } else {
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+        return true;
+        } else {
+        return false;
+        } 
+    }
+        
+    close(fd);
 
     va_end(args);
 
