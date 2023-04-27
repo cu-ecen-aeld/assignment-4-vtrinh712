@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     FILE *f = fopen(writefile, "w");
 
 // safety for general case use where file would not exist -- logs error, prints message, and exit
-    if ((!f)) {
+    if (f == NULL) {
 	syslog(LOG_ERR, "ERROR : %s file does not exist", writefile);
 	exit(1);
     }
