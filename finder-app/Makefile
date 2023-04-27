@@ -8,7 +8,7 @@ all: writer
 
 # set up use cases
 writer: writer.o
-	$(CC) $(CFLAGS) $< -o writer writer.c
+	$(CC) $(CFLAGS) -o writer writer.c
 
 writer-arm: writer.o
 	$(CC) $(CFLAGS) $< -o $@ -static
