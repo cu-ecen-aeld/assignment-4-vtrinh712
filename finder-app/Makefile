@@ -1,17 +1,10 @@
 # initialize cross-compiler & flags
-CC = gcc
+CC = $(CROSS_COMPILE)gcc
 CFLAGS = -Wall -Werror
-
-# check to see if cross-compiler is specified; otherwise, set to native/default build platform
-ifeq ($(CROSS_COMPILE),)
-TARGET = writer
-else
-TARGET = writer-arm
-endif
 
 .PHONY: all clean
 
-all: $(TARGET)
+all: writer
 
 # set up use cases
 writer: writer.o
@@ -24,4 +17,4 @@ writer.o: writer.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(TARGET) writer.o writer-arm
+	rm -f writer writer.o writer-arm
