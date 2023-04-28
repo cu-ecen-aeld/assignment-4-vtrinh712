@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # if statement checks number of arguments ("$#") to see if it is NOT equal (-ne) to 2
 # if true, which is not what we want, then showcase correct input example & exit with status 1
