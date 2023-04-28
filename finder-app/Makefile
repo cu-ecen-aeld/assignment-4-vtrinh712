@@ -7,7 +7,7 @@ CFLAGS = -Wall -Werror
 all: writer
 
 # set up use cases
-writer: writer.c
+writer: writer.o
 	$(CC) $(CFLAGS) -o writer writer.c
 
 writer-arm: writer.o
