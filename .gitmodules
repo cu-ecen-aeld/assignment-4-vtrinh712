@@ -4,3 +4,7 @@
 [submodule "buildroot"]
 	path = buildroot
 	url = https://git.busybox.net/buildroot/
+    branch = 2022.02.x
+[submodule "buildroot-assignments-base"]
+	path = buildroot-assignments-base
+	url = https://github.com/cu-ecen-aeld/buildroot-assignments-base.git
